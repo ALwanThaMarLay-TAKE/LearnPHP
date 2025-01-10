@@ -1,0 +1,17 @@
+{
+  "name": "user/pwd-project1",
+  "description": "Take",
+  "autoload": {
+    "psr-4": {
+      "Libs\\": "_classes/Libs/",
+      "Helpers\\": "_classes/Helpers/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Thu Zin Htet",
+      "email": "thuzinhtet.dev@gmail.com"
+    }
+  ],
+  "require": {}
+}
