@@ -1,11 +1,9 @@
 <?php
 
-session_start();
-if (!isset($_SESSION["user"])) {
-   header("location: index.php");
-     exit();
-     
-}
+use Helpers\Auth;
+
+include "vendor/autoload.php";
+$auth = Auth::check();
 ?>
 
 <!DOCTYPE html>
@@ -20,16 +18,19 @@ if (!isset($_SESSION["user"])) {
 
 <body>
     <div class="container mt-5">
-        <h1 class="mb-3">John Doe (Manager)</h1>
-        <?php if(isset($_GET["error"])) : ?>
+        <h1 class="mb-3">
+            <?= $auth->name ?> <span class="fw-normal text-muted">
+                (<?= $auth->role ?>)
+            </span> </h1>
+        <?php if (isset($_GET["error"])) : ?>
 
-        <div class="alert alert-warning">
-            Cannot upload file
-        </div>
+            <div class="alert alert-warning">
+                Cannot upload file
+            </div>
         <?php endif ?>
-        <?php if(file_exists("_actions/photos/profile.png")) : ?>
+        <?php if ($auth->photo) : ?>
 
-        <img class="img-thumbnail mb-3" src="_actions/photos/profile.png" alt="Profile Photo" width="200">
+            <img class="img-thumbnail mb-3" src="_actions/photos/<?= $auth->photo ?>" alt="Profile Photo" width="200">
         <?php endif ?>
         <form action="_actions/upload.php" method="post" enctype="multipart/form-data">
             <div class="input-group mb-3">
@@ -39,17 +40,19 @@ if (!isset($_SESSION["user"])) {
         </form>
         <ul class="list-group">
             <li class="list-group-item">
-                <b>Email:</b> john.doe@gmail.com
+                <b>Email:</b> <?= $auth->email ?>
             </li>
             <li class="list-group-item">
-                <b>Phone:</b> (09) 243 867 645
+                <b>Phone:</b> <?= $auth->phone  ?>
             </li>
             <li class="list-group-item">
-                <b>Address:</b> No. 321, Main Street, West City
+                <b>Address:</b><?= $auth->address  ?>
             </li>
         </ul>
         <br>
-        <a href="_actions/logout.php">Logout</a>
+        <a class="text-white btn btn-outline-primary bg-primary" href="admin.php">Manage Users</a>
+        <a class="text-white btn btn-outline-danger bg-danger" href="_actions/logout.php">Logout</a>
+
     </div>
 </body>
 

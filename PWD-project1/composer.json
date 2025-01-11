@@ -13,5 +13,7 @@
       "email": "thuzinhtet.dev@gmail.com"
     }
   ],
-  "require": {}
+  "require": {
+    "fakerphp/faker": "^1.24"
+  }
 }
